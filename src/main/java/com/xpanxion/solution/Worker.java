@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.xpanxion.java.assignments.DataAccess;
 import com.xpanxion.java.assignments.model.Department;
+import com.xpanxion.java.assignments.model.Person;
 import com.xpanxion.java.assignments.model.Product;
 
 public class Worker {
@@ -41,6 +42,21 @@ public class Worker {
         var newProductArray = productArray.stream().filter(p -> p.getDepartmentId() == 1 && p.getPrice() >= 10).toList();
         for (Product product : newProductArray) {
             System.out.println(product);
+        }
+    }
+
+    public void ex4() {
+        var productArray = DataAccess.getProducts();
+        var foodSum = productArray.stream().filter(p -> p.getDepartmentId() == 2).map(Product::getPrice).reduce((float) 0, Float::sum);
+
+        System.out.printf("$%.2f%n", foodSum);
+    }
+
+    public void ex5() {
+        var personArray = DataAccess.getPeople();
+        var newPersonArray = personArray.stream().filter(p -> p.getId() <= 3).map(p -> new Person(p.getId(), p.getFirstName(), p.getLastName(), p.getAge(), p.getSsn().substring(7))).toList();
+        for (Person person : newPersonArray) {
+            System.out.println(person);
         }
     }
 }
